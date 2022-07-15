@@ -24,6 +24,16 @@ public class Movement : MonoBehaviour
         moveVector = Vector3.zero;
         //—оздание вектора движение в определенную сторону помноженна€ на скорость
         moveVector.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
+        if (moveVector.x < 0)
+        {
+            transform.Rotate(new Vector3(0, 0, 9999) * Time.deltaTime);
+        }
+        else if (moveVector.x > 0)
+        {
+            transform.Rotate(new Vector3(0, 0, -9999) * Time.deltaTime);
+        }
+
+
         //¬ыполнение гравитации
         moveVector.y = gravityForce;
 
