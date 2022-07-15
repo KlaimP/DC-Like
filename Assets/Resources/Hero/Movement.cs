@@ -4,33 +4,50 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float maxSpeed = 10, maxJump = 1;
-    int move = 0;
-    public float time = 0;
-    Rigidbody rb;
+    public float maxSpeed, maxJump;
+    public float strengthGravity;
+
+    float gravityForce;
+    CharacterController chController;
+    Vector3 moveVector;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        chController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            rb.AddForce(new Vector3(0, maxJump * 10, 0));
-            //rb.velocity = new Vector2(rb.velocity.x, maxJump);
+        //Обнуление вектора движения
+        moveVector = Vector3.zero;
+        //Создание вектора движение в определенную сторону помноженная на скорость
+        moveVector.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
+        //Выполнение гравитации
+        moveVector.y = gravityForce;
+
+        //Передвижение персонажа поноженная на Time.deltaTime для плавности
+        chController.Move(moveVector * Time.deltaTime);
+
+        Gravity();
     }
 
     void FixedUpdate()
     {
-        //Я не нашел возможности изменения клавиш у этого метода через код.
-        //Это значит что нельзя будет сделать настройку управления в игре.
-        //Но также этот метод используется для управления с геймпада, что довольно удобно.
-        move = (int)Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(move * maxSpeed, rb.velocity.y);
 
-        
+    }
+
+    private void Gravity()
+    {
+        //Если объект находится не на земле, то опускаем персонажа на силу гравитации
+        if (!chController.isGrounded)
+            gravityForce -= strengthGravity * Time.deltaTime;
+        else
+            gravityForce = -1f;
+
+        //Прыжок
+        if (Input.GetKeyDown(KeyCode.Space) && chController.isGrounded)
+            gravityForce = maxJump;
     }
 }
