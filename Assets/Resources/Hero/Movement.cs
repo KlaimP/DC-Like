@@ -9,28 +9,31 @@ public class Movement : MonoBehaviour
 
     float gravityForce;
     CharacterController chController;
-    Vector3 moveVector;
+    public Vector3 moveVector;
 
     // Start is called before the first frame update
     void Start()
     {
         chController = GetComponent<CharacterController>();
     }
-
+   
     // Update is called once per frame
     void Update()
     {
-        //ќбнуление вектора движени€
-        moveVector = Vector3.zero;
+        
+    //ќбнуление вектора движени€
+    moveVector = Vector3.zero;
         //—оздание вектора движение в определенную сторону помноженна€ на скорость
+        
         moveVector.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
         //¬ыполнение гравитации
         moveVector.y = gravityForce;
-
+        
         //ѕередвижение персонажа поноженна€ на Time.deltaTime дл€ плавности
         chController.Move(moveVector * Time.deltaTime);
 
         Gravity();
+        
     }
 
     void FixedUpdate()
