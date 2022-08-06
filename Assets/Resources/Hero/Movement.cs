@@ -21,8 +21,8 @@ public class Movement : MonoBehaviour
     void Update()
     {
         
-    //Обнуление вектора движения
-    moveVector = Vector3.zero;
+        //Обнуление вектора движения
+        moveVector = Vector3.zero;
         //Создание вектора движение в определенную сторону помноженная на скорость
         
         moveVector.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
