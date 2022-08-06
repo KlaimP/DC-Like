@@ -9,7 +9,8 @@ public class Roll : MonoBehaviour
     //перекат построен на времени и состовл€ет 50 фреймов
     public int timer = 50;
     //откат, чтоб жизнь медом не казалась
-    public int otkat = 500;
+    public int otkatPub = 200;
+    public int otkat;
     //переменна€ дл€ движени€ 
     CharacterController RollMove;
     //переменна€ дл€ конпки, чтобы ее можно было помен€ть, если понадобитс€
@@ -18,6 +19,7 @@ public class Roll : MonoBehaviour
     {
         //объ€вление переменной дл€ движени€
         RollMove = GetComponent<CharacterController>();
+        otkat = otkatPub;
     }
     void Update()
     {
@@ -43,13 +45,13 @@ public class Roll : MonoBehaviour
             if (GetComponent<Movement>().moveVector.x > 1)
             {
                 RollMove.Move(new Vector3(30f * Time.deltaTime, 0.0f, 0.0f));
-                otkat = 500;
+                otkat = otkatPub;
             }
             //если вектор движение из класса с движением отридцательный, тогда движетс€ влево и даетс€ откат в 500 фреймов
             else if (GetComponent<Movement>().moveVector.x < -1)
             {
                 RollMove.Move(new Vector3(-30f * Time.deltaTime, 0.0f, 0.0f));
-                otkat = 500;
+                otkat = otkatPub;
             }
             //если таймер кончилс€, тогда rolling ставитс€ на false соответственно отключаетс€ перекат, возобновл€етс€ таймер, класс с движением включаетс€
             if (timer < 0)
