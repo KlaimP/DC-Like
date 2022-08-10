@@ -32,6 +32,7 @@ public class ResolutionScaler : MonoBehaviour
     {
         if (EditorApplication.isPlaying) return;
         CreateTexture();
+
     }
 #endif
 

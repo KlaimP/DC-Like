@@ -13,10 +13,13 @@ public class Movement : MonoBehaviour
 
     public bool flipRight = true;
 
+    Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
         chController = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
    
     // Update is called once per frame
@@ -41,7 +44,10 @@ public class Movement : MonoBehaviour
         else if (moveVector.x < 0 && flipRight)
             Flip();
 
-
+        if (moveVector.x != 0)
+            anim.SetBool("move", true);
+        else
+            anim.SetBool("move", false);
     }
 
     void FixedUpdate()
